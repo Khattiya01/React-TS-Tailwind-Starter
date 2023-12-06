@@ -1,5 +1,5 @@
 import { POST_USER_LOGIN_API } from "../constants";
-import { createData } from "../services/swrService";
+import { createData } from "../services/apiService";
 import { useLocalStorageData } from "./useLocalStorageData";
 
 type requestDataType = {
