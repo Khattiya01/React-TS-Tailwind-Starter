@@ -4,18 +4,18 @@ import { Footer, Navbar, Sidebar } from "../components/common";
 
 const Root = () => {
   const navigate = useNavigate();
-  const { userData, error, isLoading } = useCheckUser();
+  // const { userData, error, isLoading } = useCheckUser();
+ 
+  // console.log(userData);
 
-  console.log(userData);
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    navigate("/signin");
-    return <p>Error: {error}</p>;
-  }
+  // if (error) {
+  //   // navigate("/signin");
+  //   return <p>Error: {error}</p>;
+  // }
 
   return (
     <>

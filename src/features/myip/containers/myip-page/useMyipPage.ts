@@ -1,7 +1,8 @@
-import { GET_USER_CHECK_API } from "../constants";
-import { useSWRService } from "../services/swrService";
-import { useLocalStorageData } from "./useLocalStorageData";
+import { GET_IPAPI_API } from "../../../../shared/constants";
+import { useLocalStorageData } from "../../../../shared/hooks/useLocalStorageData";
+import { useSWRService } from "../../../../shared/services/swrService";
 
+// responseType
 interface UserData {
   data: {
     id: number;
@@ -11,20 +12,22 @@ interface UserData {
   }[];
 }
 
-const useCheckUser = () => {
+const useMyipPage = () => {
   const { token } = useLocalStorageData();
-  const url = `${GET_USER_CHECK_API}`;
+  const url = `/`;
 
   const { data, error, isLoading, mutate } = useSWRService<UserData, string>(
     url,
     token
   );
-  return {
+
+  const myip = {
     userData: data,
     error,
     isLoading,
     refreshUserData: mutate,
   };
-};
 
-export default useCheckUser;
+  return { myip };
+};
+export default useMyipPage;

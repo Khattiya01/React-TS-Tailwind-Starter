@@ -4,6 +4,8 @@ const UserProfilePage = () => {
   const { userData, error, isLoading, refreshUserData } = useUserData({
     userId: "",
   });
+
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
