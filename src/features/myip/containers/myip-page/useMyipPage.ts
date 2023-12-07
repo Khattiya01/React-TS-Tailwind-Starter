@@ -13,7 +13,7 @@ interface UserData {
 
 const useMyipPage = () => {
   const { token } = useLocalStorageData();
-  const url = `/`;
+  const url = `/posts`;
 
   const { data, error, isLoading, mutate } = useSWRService<UserData, string>(
     url,
