@@ -6,7 +6,7 @@ const MyipPage = () => {
   console.log("myip.userData", myip);
 
   return <>
-  
+    
   </>
 };
 export default MyipPage;

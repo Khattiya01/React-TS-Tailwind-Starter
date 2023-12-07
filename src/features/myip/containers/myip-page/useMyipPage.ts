@@ -1,4 +1,3 @@
-import { GET_IPAPI_API } from "../../../../shared/constants";
 import { useLocalStorageData } from "../../../../shared/hooks/useLocalStorageData";
 import { useSWRService } from "../../../../shared/services/swrService";
 
