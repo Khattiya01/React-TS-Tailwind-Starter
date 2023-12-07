@@ -3,10 +3,10 @@ import useMyipPage from "./useMyipPage";
 const MyipPage = () => {
   const { myip } = useMyipPage();
 
-  console.log("myip.userData", myip);
+  if (myip.error) return <div>failed to load</div>;
 
-  return <>
-  
-  </>
+  if (myip.isLoading) return <div>loading...</div>;
+
+  return <>{JSON.stringify(myip.userData)}</>;
 };
 export default MyipPage;
