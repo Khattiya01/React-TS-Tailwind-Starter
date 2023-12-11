@@ -5,7 +5,7 @@ import { Footer, Navbar, Sidebar } from "../components/common";
 const Root = () => {
   const navigate = useNavigate();
   // const { userData, error, isLoading } = useCheckUser();
- 
+
   // console.log(userData);
 
   // if (isLoading) {
@@ -20,9 +20,11 @@ const Root = () => {
   return (
     <>
       <Navbar />
-      <Sidebar />
-      <div>
-        <Outlet />
+      <div className=" flex">
+        <Sidebar />
+        <div>
+          <Outlet />
+        </div>
       </div>
       <Footer />
     </>

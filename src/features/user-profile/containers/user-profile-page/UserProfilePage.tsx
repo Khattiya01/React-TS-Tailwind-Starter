@@ -28,7 +28,7 @@ const UserProfilePage = () => {
     };
     await createUserProfile(payload)
       .then((res) => {
-        refreshUserData();
+        // refreshUserData();
       })
       .catch((error) => {
         console.error("Error during create:", error);
@@ -44,7 +44,7 @@ const UserProfilePage = () => {
     };
     await updateUserProfile(payload)
       .then((res) => {
-        refreshUserData();
+        // refreshUserData();
       })
       .catch((error) => {
         console.error("Error during create:", error);
@@ -57,17 +57,12 @@ const UserProfilePage = () => {
     };
     await deleteUserProfile(payload)
       .then((res) => {
-        refreshUserData();
+        // refreshUserData();
       })
       .catch((error) => {
         console.error("Error during create:", error);
       });
   };
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-
   return (
     <section className=" w-screen h-screen min-h-screen p-2 flex items-center flex-col gap-4">
       <div className="flex flex-col gap-2">
@@ -98,10 +93,10 @@ const UserProfilePage = () => {
       </div>
       <h3 className=" font-bold text-2xl">User Profile</h3>
       {isLoading ? (
-        <p>loading...</p>
+        <div>loading...</div>
       ) : (
-        userData?.data?.map((item) => (
-          <div key={item.id} className="flex gap-2 w-[400px] justify-between">
+        userData?.data && userData?.data?.length > 0 && userData?.data?.map((item) => (
+          <div key={item?.id} className="flex gap-2 w-[400px] justify-between">
             <div>
               <input
                 type="text"
