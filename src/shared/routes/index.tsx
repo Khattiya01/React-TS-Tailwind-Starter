@@ -5,6 +5,7 @@ import LoginPage from "../../features/authentication/containers/login-page/login
 import UserProfilePage from "../../features/user-profile/containers/user-profile-page/UserProfilePage";
 import MyipPage from "../../features/myip/containers/myip-page/MyipPage";
 import ExamplePage from "../../features/example/containers/examples/examplePage";
+import AboutPage from "../../features/about/containers/about-page/aboutPage";
 
 const router = createBrowserRouter([
   //main
@@ -27,9 +28,13 @@ const router = createBrowserRouter([
     ],
   },
   //
+  // {
+  //   path: "/signin",
+  //   element: <LoginPage />,
+  // },
   {
-    path: "/signin",
-    element: <LoginPage />,
-  },
+    path: "/about",
+    element: <AboutPage/>
+  }
 ]);
 export default router;
