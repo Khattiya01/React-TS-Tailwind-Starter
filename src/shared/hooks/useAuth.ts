@@ -12,14 +12,12 @@ const useAuth = () => {
   const url = `${POST_USER_LOGIN_API}`;
 
   const login = async (credentials: requestDataType) => {
-    const response = await createData({ url, credentials, token });
-    return response;
+    return await createData({ url, credentials, token });
   };
 
   //formData
   const logout = async (credentials: requestDataType) => {
-    const response = await createData({ url, credentials, token });
-    return response;
+    return await createData({ url, credentials, token });
   };
 
   return { login };

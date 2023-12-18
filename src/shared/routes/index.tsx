@@ -12,6 +12,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    // ลูกๆ 
     children: [
       {
         path: "profile",
