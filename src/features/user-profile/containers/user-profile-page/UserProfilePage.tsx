@@ -1,17 +1,13 @@
 import { useState } from "react";
 import {
-  useCreateUserProfile,
-  useDeleteUserProfile,
-  useUpdateUserProfile,
   userProfile,
+  useUserProfile
 } from "./useUserProfilePage";
 
 const UserProfilePage = () => {
   //hooks
   const { userData, error, isLoading, refreshUserData } = userProfile();
-  const { createUserProfile } = useCreateUserProfile();
-  const { updateUserProfile } = useUpdateUserProfile();
-  const { deleteUserProfile } = useDeleteUserProfile();
+  const { createUserProfile, updateUserProfile, deleteUserProfile } = useUserProfile();
 
   //data
   const [email, setEmail] = useState<string>("");
@@ -63,6 +59,9 @@ const UserProfilePage = () => {
         console.error("Error during create:", error);
       });
   };
+
+ 
+
   return (
     <section className=" w-screen h-screen min-h-screen p-2 flex items-center flex-col gap-4">
       <div className="flex flex-col gap-2">

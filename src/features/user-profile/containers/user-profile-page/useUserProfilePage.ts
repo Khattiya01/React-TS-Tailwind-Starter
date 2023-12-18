@@ -44,39 +44,25 @@ const userProfile = () => {
   };
 };
 
-const useCreateUserProfile = () => {
+const useUserProfile = () => {
   const { token } = useLocalStorageData();
-  const url = `${POST_USER_API}`;
+  const urlCreate = `${POST_USER_API}`;
+  const urlUpdate = `${PUT_USER_API}`;
 
   const createUserProfile = async (credentials: payloadCreateUser) => {
-    return await createData({ url, credentials, token });
+    return await createData({ url: urlCreate, credentials, token });
   };
-  return { createUserProfile };
-};
-
-const useUpdateUserProfile = () => {
-  const { token } = useLocalStorageData();
-  const url = `${PUT_USER_API}`;
 
   const updateUserProfile = async (credentials: payloadUpdateUser) => {
-    return await updateData({ url, credentials, token });
+    return await updateData({ url: urlUpdate, credentials, token });
   };
-  return { updateUserProfile };
-};
-
-const useDeleteUserProfile = () => {
-  const { token } = useLocalStorageData();
 
   const deleteUserProfile = async (credentials: payloadDeleteUser) => {
     const url = `${DELETE_USER_API}/${credentials.id}`;
     return await deleteData({ url, token });
   };
-  return { deleteUserProfile };
+
+  return { createUserProfile, updateUserProfile, deleteUserProfile };
 };
 
-export {
-  userProfile,
-  useCreateUserProfile,
-  useUpdateUserProfile,
-  useDeleteUserProfile,
-};
+export { userProfile, useUserProfile };
