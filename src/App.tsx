@@ -1,4 +1,3 @@
-import "./App.css";
 import LocalStorageProvider from "./shared/contexts/LocalStorageProvider";
 import { RouterProvider } from "react-router-dom";
 import router from "./shared/routes";

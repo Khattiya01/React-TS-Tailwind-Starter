@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Root from "./root";
-import LoginPage from "../../features/authentication/containers/login-page/loginPage";
 import UserProfilePage from "../../features/user-profile/containers/user-profile-page/UserProfilePage";
 import MyipPage from "../../features/myip/containers/myip-page/MyipPage";
 import ExamplePage from "../../features/example/containers/examples/examplePage";

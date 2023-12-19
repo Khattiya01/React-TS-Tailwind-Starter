@@ -6,7 +6,7 @@ import {
 
 const UserProfilePage = () => {
   //hooks
-  const { userData, error, isLoading, refreshUserData } = userProfile();
+  const { userData, isLoading, refreshUserData } = userProfile();
   const { createUserProfile, updateUserProfile, deleteUserProfile } = useUserProfile();
 
   //data
@@ -23,8 +23,8 @@ const UserProfilePage = () => {
       name: name,
     };
     await createUserProfile(payload)
-      .then((res) => {
-        // refreshUserData();
+      .then(() => {
+        refreshUserData();
       })
       .catch((error) => {
         console.error("Error during create:", error);
@@ -39,8 +39,8 @@ const UserProfilePage = () => {
       name: item.name,
     };
     await updateUserProfile(payload)
-      .then((res) => {
-        // refreshUserData();
+      .then(() => {
+        refreshUserData();
       })
       .catch((error) => {
         console.error("Error during create:", error);
@@ -52,8 +52,8 @@ const UserProfilePage = () => {
       id: id,
     };
     await deleteUserProfile(payload)
-      .then((res) => {
-        // refreshUserData();
+      .then(() => {
+        refreshUserData();
       })
       .catch((error) => {
         console.error("Error during create:", error);
@@ -63,6 +63,7 @@ const UserProfilePage = () => {
  
 
   return (
+    
     <section className=" w-screen h-screen min-h-screen p-2 flex items-center flex-col gap-4">
       <div className="flex flex-col gap-2">
         <input

@@ -19,7 +19,6 @@ const LocalStorageProvider = ({ children }: any) => {
   const [token, setToken] = useLocalStorage<any>("token", "");
 
   const [isLogin, setIslogin] = useState<boolean>(false);
-  const [user, setUser] = useState<any>("");
 
   return (
     <LocalStorageContext.Provider

@@ -23,7 +23,10 @@ const fetcher = async <Data, Error>({
 const useSWRService = <Data, Error>(
   url: string,
   token?: string,
-  options = {}
+  options: { revalidateOnFocus: boolean; refreshInterval: number } = {
+    revalidateOnFocus: false,
+    refreshInterval: 10000,
+  }
 ): SWRResponse<Data, Error> => {
   const { data, error, mutate } = useSWR<FetcherResponse<Data, Error>>(
     { url, token },

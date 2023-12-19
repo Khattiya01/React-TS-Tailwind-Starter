@@ -1,9 +1,7 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import useCheckUser from "../hooks/useCheckUser";
+import { Outlet } from "react-router-dom";
 import { Footer, Navbar, Sidebar } from "../components/common";
 
 const Root = () => {
-  const navigate = useNavigate();
   // const { userData, error, isLoading } = useCheckUser();
 
   // console.log(userData);
