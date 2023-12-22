@@ -5,11 +5,8 @@ import {
   DELETE_USER_API,
 } from "../../../../shared/constants";
 import { useLocalStorageData } from "../../../../shared/hooks/useLocalStorageData";
-import {
-  createData,
-  deleteData,
-  updateData,
-} from "../../../../shared/services/apiService";
+import { TodoService } from "../../../../shared/services/apiService";
+
 import { useSWRService } from "../../../../shared/services/swrService";
 import {
   payloadCreateUser,
@@ -33,7 +30,11 @@ const userProfile = () => {
 
   const { data, error, isLoading, mutate } = useSWRService<UserData, string>(
     url,
-    token
+    token,
+    {
+      revalidateOnFocus: false,
+      refreshInterval: 10000,
+    }
   );
 
   return {
@@ -48,18 +49,19 @@ const useUserProfile = () => {
   const { token } = useLocalStorageData();
   const urlCreate = `${POST_USER_API}`;
   const urlUpdate = `${PUT_USER_API}`;
+  const urlDelete = `${DELETE_USER_API}`;
 
   const createUserProfile = async (credentials: payloadCreateUser) => {
-    return await createData({ url: urlCreate, credentials, token });
+    return await TodoService.createData({ url: urlCreate, credentials, token });
   };
 
   const updateUserProfile = async (credentials: payloadUpdateUser) => {
-    return await updateData({ url: urlUpdate, credentials, token });
+    return await TodoService.updateData({ url: urlUpdate, credentials, token });
   };
 
   const deleteUserProfile = async (credentials: payloadDeleteUser) => {
-    const url = `${DELETE_USER_API}/${credentials.id}`;
-    return await deleteData({ url, token });
+    const url = `${urlDelete}/${credentials.id}`;
+    return await TodoService.deleteData({ url, token });
   };
 
   return { createUserProfile, updateUserProfile, deleteUserProfile };

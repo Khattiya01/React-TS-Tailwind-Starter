@@ -1,13 +1,11 @@
-import { useState } from "react";
-import {
-  userProfile,
-  useUserProfile
-} from "./useUserProfilePage";
+import { Suspense, useState } from "react";
+import { userProfile, useUserProfile } from "./useUserProfilePage";
 
 const UserProfilePage = () => {
   //hooks
   const { userData, isLoading, refreshUserData } = userProfile();
-  const { createUserProfile, updateUserProfile, deleteUserProfile } = useUserProfile();
+  const { createUserProfile, updateUserProfile, deleteUserProfile } =
+    useUserProfile();
 
   //data
   const [email, setEmail] = useState<string>("");
@@ -60,10 +58,7 @@ const UserProfilePage = () => {
       });
   };
 
- 
-
   return (
-    
     <section className=" w-screen h-screen min-h-screen p-2 flex items-center flex-col gap-4">
       <div className="flex flex-col gap-2">
         <input
@@ -95,7 +90,9 @@ const UserProfilePage = () => {
       {isLoading ? (
         <div>loading...</div>
       ) : (
-        userData?.data && userData?.data?.length > 0 && userData?.data?.map((item) => (
+        userData?.data &&
+        userData?.data?.length > 0 &&
+        userData?.data?.map((item) => (
           <div key={item?.id} className="flex gap-2 w-[400px] justify-between">
             <div>
               <input
