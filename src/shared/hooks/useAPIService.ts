@@ -14,7 +14,7 @@ const Get = <T>({
       const response: AxiosResponse<T> = await apiService({ token: token }).get(
         url
       );
-      return { data: response.data };
+      return  { data: response.data };
     } catch (error) {
       console.error("Error creating data:", error);
       throw error;
@@ -31,7 +31,7 @@ const Get = <T>({
   };
 };
 
-const Post = <T>({ url, token }: PostAndPutAPIType) => {
+const Post = <T, CredentialsType>({ url, token }: PostAndPutAPIType) => {
   const [state, setState] = useState<APIState<T>>({
     data: null,
     loading: false,
@@ -39,7 +39,7 @@ const Post = <T>({ url, token }: PostAndPutAPIType) => {
     oldCredentials: null,
   });
 
-  const postData = async (credentials: unknown) => {
+  const postData = async (credentials: CredentialsType) => {
     setState((prevState) => ({
       ...prevState,
       oldCredentials: credentials,
@@ -76,7 +76,7 @@ const Post = <T>({ url, token }: PostAndPutAPIType) => {
   return { ...state, postData, mutate };
 };
 
-const Put = <T>({ url, token }: PostAndPutAPIType) => {
+const Put = <T, CredentialsType>({ url, token }: PostAndPutAPIType) => {
   const [state, setState] = useState<APIState<T>>({
     data: null,
     loading: false,
@@ -84,7 +84,7 @@ const Put = <T>({ url, token }: PostAndPutAPIType) => {
     oldCredentials: null,
   });
 
-  const putData = async (credentials: unknown) => {
+  const putData = async (credentials: CredentialsType) => {
     setState((prevState) => ({
       ...prevState,
       oldCredentials: credentials,

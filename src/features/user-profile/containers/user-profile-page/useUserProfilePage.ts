@@ -6,6 +6,7 @@ import {
 } from "../../../../shared/constants";
 import { useAPIService } from "../../../../shared/hooks/useAPIService";
 import { useLocalStorageData } from "../../../../shared/hooks/useLocalStorageData";
+import { payloadCreateUser, payloadUpdateUser } from "../../types/payload";
 import {
   responseDeleteType,
   responsePostType,
@@ -38,7 +39,7 @@ const useUserProfilePage = () => {
 
   const CreateUserProfile = () => {
     const { data, error, loading, mutate, postData } =
-      useAPIService.Post<responsePostType>({ url: urlCreate, token });
+      useAPIService.Post<responsePostType, payloadCreateUser>({ url: urlCreate, token });
 
     return {
       responsePostUserProfile: data,
@@ -51,7 +52,7 @@ const useUserProfilePage = () => {
 
   const UpdateUserProfile = () => {
     const { data, error, loading, mutate, putData } =
-      useAPIService.Put<responsePutType>({ url: urlUpdate, token });
+      useAPIService.Put<responsePutType, payloadUpdateUser>({ url: urlUpdate, token });
 
     return {
       responsePutUserProfile: data,

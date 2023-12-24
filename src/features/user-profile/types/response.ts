@@ -3,8 +3,9 @@ export type userProfileType = {
     id: number;
     firstname: string;
     lastname: string;
+    accountName?: string;
     email: string;
-    password: string | number;
+    password: string;
   }[];
 };
 

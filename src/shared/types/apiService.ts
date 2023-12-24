@@ -1,6 +1,6 @@
-type APIProps = {
+type APIProps<T> = {
   url?: string;
-  credentials?: any;
+  credentials?: T;
   token?: string;
   options?: { revalidateOnFocus: boolean; refreshInterval: number };
 };

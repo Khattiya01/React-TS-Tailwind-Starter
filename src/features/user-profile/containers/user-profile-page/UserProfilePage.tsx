@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUserProfilePage } from "./useUserProfilePage";
+import { payloadCreateUser, payloadUpdateUser } from "../../types/payload";
 
 const UserProfilePage = () => {
   // hooks
@@ -30,27 +31,23 @@ const UserProfilePage = () => {
 
   // handle
   const handleCreateForm = async () => {
-    const payload = {
+    const payload: payloadCreateUser = {
       email: email,
       password: password,
       firstname: firstname,
       lastname: lastname,
+      accountName: "",
     };
     await postUserProfile(payload);
     await refreshUserData();
   };
 
-  const handleUpdateForm = async (item: {
-    id: number;
-    lastname: string;
-    firstname: string;
-    email?: string;
-    password: string | number;
-  }) => {
-    const payload = {
+  const handleUpdateForm = async (item: payloadUpdateUser) => {
+    const payload: payloadUpdateUser = {
       id: item.id,
       email: emailUpdate,
       password: item.password,
+      accountName: "",
       firstname: item.firstname,
       lastname: item.lastname,
     };

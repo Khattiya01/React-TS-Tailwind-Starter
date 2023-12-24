@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { requestDataType } from "../types/requestDataType";
 import { APIProps } from "../types/apiService";
 
-const apiService = ({ token }: APIProps) => {
+const apiService = <T>({ token }: APIProps<T>) => {
   const axiosCreate: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_MAIN_PATH,
     timeout: 5000,

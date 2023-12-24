@@ -1,14 +1,18 @@
 export type payloadCreateUser = {
-  name: string;
+  firstname: string;
+  lastname: string;
+  accountName?: string;
   email: string;
   password: string;
 };
 
 export type payloadUpdateUser = {
   id: number;
-  name: string;
+  firstname: string;
+  lastname: string;
+  accountName?: string;
   email: string;
-  password: string | number;
+  password: string;
 };
 
 export type payloadDeleteUser = {
