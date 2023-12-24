@@ -13,17 +13,17 @@ import {
   userProfileType,
 } from "../../types/response";
 
-const useUserProfile = () => {
+const useUserProfilePage = () => {
   const { token } = useLocalStorageData();
   const urlRead = `${GET_USER_API}`;
   const urlCreate = `${POST_USER_API}`;
   const urlUpdate = `${PUT_USER_API}`;
   const urlDelete = `${DELETE_USER_API}`;
 
-  const UserProfile = () => {
+  const UserProfile = ({ page, limit }: { page: string; limit: string }) => {
     const { data, error, isLoading, mutate } =
       useAPIService.Get<userProfileType>({
-        url: urlRead,
+        url: urlRead + `?page${page}` + `&limit${limit}`,
         token,
         options: { revalidateOnFocus: false, refreshInterval: 20000 },
       });
@@ -83,4 +83,4 @@ const useUserProfile = () => {
   };
 };
 
-export { useUserProfile };
+export { useUserProfilePage };

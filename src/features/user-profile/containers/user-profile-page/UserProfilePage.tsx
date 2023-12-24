@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUserProfile } from "./useUserProfilePage";
+import { useUserProfilePage } from "./useUserProfilePage";
 
 const UserProfilePage = () => {
   // hooks
@@ -8,21 +8,24 @@ const UserProfilePage = () => {
     CreateUserProfile,
     UpdateUserProfile,
     DeleteUserProfile,
-  } = useUserProfile();
+  } = useUserProfilePage();
+
+   // state
+   const [email, setEmail] = useState<string>("");
+   const [emailUpdate, setEmailUpdate] = useState<string>("");
+   const [password, setPassword] = useState<string>("");
+   const [firstname, setFirstname] = useState<string>("");
+   const [lastname, setLastname] = useState<string>("");
+   const [page, setPage] = useState<string>("1");
+   const [limit, setLimit] = useState<string>("10");
 
   // data
-  const { userData, isLoading, refreshUserData } = UserProfile();
-  const { postUserProfile, isLoadingPost, responsePostUserProfile } =
-    CreateUserProfile();
-  const { putUserProfile, responsePutUserProfile } = UpdateUserProfile();
-  const { deleteUserProfile, isErrorDelete } = DeleteUserProfile();
-  // state
-  const [email, setEmail] = useState<string>("");
-  const [emailUpdate, setEmailUpdate] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [firstname, setFirstname] = useState<string>("");
-  const [lastname, setLastname] = useState<string>("");
+  const { userData, isLoading, refreshUserData } = UserProfile({ page: page , limit: limit });
+  const { postUserProfile, isLoadingPost } = CreateUserProfile();
+  const { putUserProfile } = UpdateUserProfile();
+  const { deleteUserProfile } = DeleteUserProfile();
 
+ 
   // handle
   const handleCreateForm = async () => {
     const payload = {
@@ -31,10 +34,8 @@ const UserProfilePage = () => {
       firstname: firstname,
       lastname: lastname,
     };
-    await postUserProfile(payload).then(() => {
-      refreshUserData();
-      console.log("success", responsePostUserProfile?.msg);
-    });
+    await postUserProfile(payload);
+    await refreshUserData();
   };
 
   const handleUpdateForm = async (item: {
@@ -51,16 +52,13 @@ const UserProfilePage = () => {
       firstname: item.firstname,
       lastname: item.lastname,
     };
-    await putUserProfile(payload).then(() => {
-      refreshUserData();
-      console.log("update success", responsePutUserProfile?.message);
-    });
+    await putUserProfile(payload);
+    await refreshUserData();
   };
 
   const handleDeleteForm = async (id: string | number) => {
     await deleteUserProfile(id);
     await refreshUserData();
-    await isErrorDelete ? console.log("delete failed", responsePutUserProfile?.message) : console.log("delete success", responsePutUserProfile?.message)
   };
 
   // lifecycle
@@ -100,12 +98,14 @@ const UserProfilePage = () => {
         </button>
       </div>
       <h3 className=" font-bold text-2xl">User Profile</h3>
+      <div><input type="text" placeholder="page" onChange={(e) => setPage(e.target.value)}/></div>
+      <div><input type="text" placeholder="limit" onChange={(e) => setLimit(e.target.value)}/></div>
       {isLoading || isLoadingPost ? (
         <div>loading...</div>
       ) : (
         userData?.data &&
         userData?.data?.length > 0 &&
-        userData?.data?.map((item, index: number) => (
+        userData?.data?.map((item, index) => (
           <div key={item?.id} className="flex gap-2 w-[400px] justify-between">
             {index + 1}
             <div>

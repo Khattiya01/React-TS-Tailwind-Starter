@@ -1,14 +1,14 @@
 import { useState } from "react";
 import apiService from "../services/apiService";
 import { AxiosResponse } from "axios";
-import { APIProps, APIState } from "../types/apiService";
+import { APIState, DeleteAPIType, PostAndPutAPIType, GetAPIType} from "../types/apiService";
 import useSWR from "swr";
 
 const Get = <T>({
   url,
   token,
   options = { revalidateOnFocus: false, refreshInterval: 10000 },
-}: APIProps) => {
+}: GetAPIType) => {
   const getData = async () => {
     try {
       const response: AxiosResponse<T> = await apiService({ token: token }).get(
@@ -31,7 +31,7 @@ const Get = <T>({
   };
 };
 
-const Post = <T>({ url, token }: APIProps) => {
+const Post = <T>({ url, token }: PostAndPutAPIType) => {
   const [state, setState] = useState<APIState<T>>({
     data: null,
     loading: false,
@@ -76,7 +76,7 @@ const Post = <T>({ url, token }: APIProps) => {
   return { ...state, postData, mutate };
 };
 
-const Put = <T>({ url, token }: APIProps) => {
+const Put = <T>({ url, token }: PostAndPutAPIType) => {
   const [state, setState] = useState<APIState<T>>({
     data: null,
     loading: false,
@@ -121,7 +121,7 @@ const Put = <T>({ url, token }: APIProps) => {
   return { ...state, putData, mutate };
 };
 
-const Delete = <T>({ url, token }: APIProps) => {
+const Delete = <T>({ url, token }: DeleteAPIType) => {
   const [state, setState] = useState<APIState<T>>({
     data: null,
     loading: false,

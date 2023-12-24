@@ -1,12 +1,8 @@
 import axios, { AxiosInstance } from "axios";
-
 import { requestDataType } from "../types/requestDataType";
+import { APIProps } from "../types/apiService";
 
-type ApiServiceProps = {
-  token?: string;
-}
-
-const apiService = ({ token }: ApiServiceProps) => {
+const apiService = ({ token }: APIProps) => {
   const axiosCreate: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_MAIN_PATH,
     timeout: 5000,
@@ -19,6 +15,32 @@ const apiService = ({ token }: ApiServiceProps) => {
 };
 
 export default apiService;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const createData = async ({ url, credentials, token }: requestDataType) => {
   try {

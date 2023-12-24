@@ -1,8 +1,24 @@
 type APIProps = {
-  url: string;
+  url?: string;
   credentials?: any;
   token?: string;
   options?: { revalidateOnFocus: boolean; refreshInterval: number };
+};
+
+type GetAPIType = {
+  url: string;
+  token?: string;
+  options?: { revalidateOnFocus: boolean; refreshInterval: number };
+};
+
+type PostAndPutAPIType = {
+  url: string;
+  token?: string;
+};
+
+type DeleteAPIType = {
+  url: string;
+  token: string;
 };
 
 type APIState<T> = {
@@ -11,4 +27,10 @@ type APIState<T> = {
   error: any;
   oldCredentials: any;
 };
-export type { APIProps, APIState };
+export type {
+  APIProps,
+  APIState,
+  GetAPIType,
+  PostAndPutAPIType,
+  DeleteAPIType,
+};
