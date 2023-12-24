@@ -25,7 +25,7 @@ const useUserProfilePage = () => {
       useAPIService.Get<userProfileType>({
         url: urlRead + `?page${page}` + `&limit${limit}`,
         token,
-        options: { revalidateOnFocus: false, refreshInterval: 20000 },
+        options: { revalidateOnFocus: true, refreshInterval: 5000 },
       });
 
     return {

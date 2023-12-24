@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserProfilePage } from "./useUserProfilePage";
 
 const UserProfilePage = () => {
@@ -10,22 +10,24 @@ const UserProfilePage = () => {
     DeleteUserProfile,
   } = useUserProfilePage();
 
-   // state
-   const [email, setEmail] = useState<string>("");
-   const [emailUpdate, setEmailUpdate] = useState<string>("");
-   const [password, setPassword] = useState<string>("");
-   const [firstname, setFirstname] = useState<string>("");
-   const [lastname, setLastname] = useState<string>("");
-   const [page, setPage] = useState<string>("1");
-   const [limit, setLimit] = useState<string>("10");
+  // state
+  const [email, setEmail] = useState<string>("");
+  const [emailUpdate, setEmailUpdate] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [firstname, setFirstname] = useState<string>("");
+  const [lastname, setLastname] = useState<string>("");
+  const [page, setPage] = useState<string>("1");
+  const [limit, setLimit] = useState<string>("10");
 
   // data
-  const { userData, isLoading, refreshUserData } = UserProfile({ page: page , limit: limit });
+  const { userData, isLoading, refreshUserData } = UserProfile({
+    page: page,
+    limit: limit,
+  });
   const { postUserProfile, isLoadingPost } = CreateUserProfile();
   const { putUserProfile } = UpdateUserProfile();
   const { deleteUserProfile } = DeleteUserProfile();
 
- 
   // handle
   const handleCreateForm = async () => {
     const payload = {
@@ -98,8 +100,20 @@ const UserProfilePage = () => {
         </button>
       </div>
       <h3 className=" font-bold text-2xl">User Profile</h3>
-      <div><input type="text" placeholder="page" onChange={(e) => setPage(e.target.value)}/></div>
-      <div><input type="text" placeholder="limit" onChange={(e) => setLimit(e.target.value)}/></div>
+      <div>
+        <input
+          type="text"
+          placeholder="page"
+          onChange={(e) => setPage(e.target.value)}
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          placeholder="limit"
+          onChange={(e) => setLimit(e.target.value)}
+        />
+      </div>
       {isLoading || isLoadingPost ? (
         <div>loading...</div>
       ) : (
