@@ -4,67 +4,83 @@ import {
   PUT_USER_API,
   DELETE_USER_API,
 } from "../../../../shared/constants";
+import { useAPIService } from "../../../../shared/hooks/useAPIService";
 import { useLocalStorageData } from "../../../../shared/hooks/useLocalStorageData";
-import { TodoService } from "../../../../shared/services/apiService";
-
-import { useSWRService } from "../../../../shared/services/swrService";
 import {
-  payloadCreateUser,
-  payloadDeleteUser,
-  payloadUpdateUser,
-} from "../../types/payload";
-
-// responseType
-interface UserData {
-  data: {
-    id: number;
-    name: string;
-    email: string;
-    password: string | number;
-  }[];
-}
-
-const userProfile = () => {
-  const { token } = useLocalStorageData();
-  const url = `${GET_USER_API}`;
-
-  const { data, error, isLoading, mutate } = useSWRService<UserData, string>(
-    url,
-    token,
-    {
-      revalidateOnFocus: false,
-      refreshInterval: 10000,
-    }
-  );
-
-  return {
-    userData: data,
-    error,
-    isLoading,
-    refreshUserData: mutate,
-  };
-};
+  responseDeleteType,
+  responsePostType,
+  responsePutType,
+  userProfileType,
+} from "../../types/response";
 
 const useUserProfile = () => {
   const { token } = useLocalStorageData();
+  const urlRead = `${GET_USER_API}`;
   const urlCreate = `${POST_USER_API}`;
   const urlUpdate = `${PUT_USER_API}`;
   const urlDelete = `${DELETE_USER_API}`;
 
-  const createUserProfile = async (credentials: payloadCreateUser) => {
-    return await TodoService.createData({ url: urlCreate, credentials, token });
+  const UserProfile = () => {
+    const { data, error, isLoading, mutate } =
+      useAPIService.Get<userProfileType>({
+        url: urlRead,
+        token,
+        options: { revalidateOnFocus: false, refreshInterval: 20000 },
+      });
+
+    return {
+      userData: data,
+      error,
+      isLoading,
+      refreshUserData: mutate,
+    };
   };
 
-  const updateUserProfile = async (credentials: payloadUpdateUser) => {
-    return await TodoService.updateData({ url: urlUpdate, credentials, token });
+  const CreateUserProfile = () => {
+    const { data, error, loading, mutate, postData } =
+      useAPIService.Post<responsePostType>({ url: urlCreate, token });
+
+    return {
+      responsePostUserProfile: data,
+      postUserProfile: postData,
+      isErrorPost: error,
+      isLoadingPost: loading,
+      refreshPost: mutate,
+    };
   };
 
-  const deleteUserProfile = async (credentials: payloadDeleteUser) => {
-    const url = `${urlDelete}/${credentials.id}`;
-    return await TodoService.deleteData({ url, token });
+  const UpdateUserProfile = () => {
+    const { data, error, loading, mutate, putData } =
+      useAPIService.Put<responsePutType>({ url: urlUpdate, token });
+
+    return {
+      responsePutUserProfile: data,
+      putUserProfile: putData,
+      isErrorPut: error,
+      isLoadingPut: loading,
+      refreshPut: mutate,
+    };
   };
 
-  return { createUserProfile, updateUserProfile, deleteUserProfile };
+  const DeleteUserProfile = () => {
+    const { data, error, loading, mutate, deleteData } =
+      useAPIService.Delete<responseDeleteType>({ url: urlDelete, token });
+
+    return {
+      responseDeleteUserProfile: data,
+      deleteUserProfile: deleteData,
+      isErrorDelete: error,
+      isLoadingDelete: loading,
+      refreshDelete: mutate,
+    };
+  };
+
+  return {
+    UserProfile,
+    CreateUserProfile,
+    UpdateUserProfile,
+    DeleteUserProfile,
+  };
 };
 
-export { userProfile, useUserProfile };
+export { useUserProfile };

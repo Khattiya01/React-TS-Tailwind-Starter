@@ -5,10 +5,10 @@ export type payloadCreateUser = {
 };
 
 export type payloadUpdateUser = {
-  id: string | number;
+  id: number;
   name: string;
   email: string;
-  password: string;
+  password: string | number;
 };
 
 export type payloadDeleteUser = {

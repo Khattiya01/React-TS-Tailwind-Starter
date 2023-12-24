@@ -1,10 +1,15 @@
 import axios, { AxiosInstance } from "axios";
+
 import { requestDataType } from "../types/requestDataType";
 
-const apiService = ({ token }: { token?: string }) => {
+type ApiServiceProps = {
+  token?: string;
+}
+
+const apiService = ({ token }: ApiServiceProps) => {
   const axiosCreate: AxiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_MAIN_PATH, // ตั้งค่า baseURL ของ API ของคุณ
-    timeout: 5000, // ตั้งค่า timeout สำหรับ request ทั้งหมดเป็น 5 วินาที
+    baseURL: import.meta.env.VITE_MAIN_PATH,
+    timeout: 5000,
     headers: {
       Authorization: `Bearer ${token ?? ""}`,
       "Content-Type": "application/json",
@@ -45,8 +50,9 @@ const deleteData = async ({ url, token }: requestDataType) => {
   }
 };
 
-export const TodoService = {
-  createData: createData,
-  updateData: updateData,
-  deleteData: deleteData,
+export const httpServices = {
+  createData,
+  updateData,
+  deleteData,
 };
+
