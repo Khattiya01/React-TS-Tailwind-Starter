@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useUserProfilePage } from "./useUserProfilePage";
-import { payloadCreateUser, payloadUpdateUser } from "../../types/payload";
+import {
+  payloadCreateUser,
+  payloadDeleteUser,
+  payloadUpdateUser,
+} from "../../types/payload";
 
 const UserProfilePage = () => {
   // hooks
@@ -27,7 +31,7 @@ const UserProfilePage = () => {
   });
   const { postUserProfile, isLoadingPost } = CreateUserProfile();
   const { putUserProfile } = UpdateUserProfile();
-  const { deleteUserProfile } = DeleteUserProfile();
+  const { deleteUserProfile, isLoadingDelete } = DeleteUserProfile();
 
   // handle
   const handleCreateForm = async () => {
@@ -38,8 +42,11 @@ const UserProfilePage = () => {
       lastname: lastname,
       accountName: "",
     };
-    await postUserProfile(payload);
-    await refreshUserData();
+    await postUserProfile(payload)
+      .then((res) => {
+        console.log(res.data.msg);
+        refreshUserData();
+      })
   };
 
   const handleUpdateForm = async (item: payloadUpdateUser) => {
@@ -56,7 +63,10 @@ const UserProfilePage = () => {
   };
 
   const handleDeleteForm = async (id: string | number) => {
-    await deleteUserProfile(id);
+    const payload: payloadDeleteUser = {
+      id,
+    };
+    await deleteUserProfile(payload);
     await refreshUserData();
   };
 
@@ -111,7 +121,7 @@ const UserProfilePage = () => {
           onChange={(e) => setLimit(e.target.value)}
         />
       </div>
-      {isLoading || isLoadingPost ? (
+      {isLoading || isLoadingPost || isLoadingDelete ? (
         <div>loading...</div>
       ) : (
         userData?.data &&

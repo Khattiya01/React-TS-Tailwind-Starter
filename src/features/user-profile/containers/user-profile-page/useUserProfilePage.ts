@@ -6,7 +6,10 @@ import {
 } from "../../../../shared/constants";
 import { useAPIService } from "../../../../shared/hooks/useAPIService";
 import { useLocalStorageData } from "../../../../shared/hooks/useLocalStorageData";
-import { payloadCreateUser, payloadUpdateUser } from "../../types/payload";
+import {
+  payloadCreateUser,
+  payloadUpdateUser,
+} from "../../types/payload";
 import {
   responseDeleteType,
   responsePostType,
@@ -26,7 +29,7 @@ const useUserProfilePage = () => {
       useAPIService.Get<userProfileType>({
         url: urlRead + `?page${page}` + `&limit${limit}`,
         token,
-        options: { revalidateOnFocus: true, refreshInterval: 5000 },
+        options: { revalidateOnFocus: true, refreshInterval: 10000 },
       });
 
     return {
@@ -38,8 +41,10 @@ const useUserProfilePage = () => {
   };
 
   const CreateUserProfile = () => {
-    const { data, error, loading, mutate, postData } =
-      useAPIService.Post<responsePostType, payloadCreateUser>({ url: urlCreate, token });
+    const { data, error, loading, mutate, postData } = useAPIService.Post<
+      responsePostType,
+      payloadCreateUser
+    >({ url: urlCreate, token });
 
     return {
       responsePostUserProfile: data,
@@ -51,8 +56,10 @@ const useUserProfilePage = () => {
   };
 
   const UpdateUserProfile = () => {
-    const { data, error, loading, mutate, putData } =
-      useAPIService.Put<responsePutType, payloadUpdateUser>({ url: urlUpdate, token });
+    const { data, error, loading, mutate, putData } = useAPIService.Put<
+      responsePutType,
+      payloadUpdateUser
+    >({ url: urlUpdate, token });
 
     return {
       responsePutUserProfile: data,
@@ -64,8 +71,9 @@ const useUserProfilePage = () => {
   };
 
   const DeleteUserProfile = () => {
-    const { data, error, loading, mutate, deleteData } =
-      useAPIService.Delete<responseDeleteType>({ url: urlDelete, token });
+    const { data, error, loading, mutate, deleteData } = useAPIService.Delete<
+      responseDeleteType
+    >({ url: urlDelete, token });
 
     return {
       responseDeleteUserProfile: data,

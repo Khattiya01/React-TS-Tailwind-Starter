@@ -1,5 +1,6 @@
 import { POST_USER_LOGIN_API } from "../constants";
-import { createData } from "../services/apiService";
+import { useAPIService } from "./useAPIService";
+
 import { useLocalStorageData } from "./useLocalStorageData";
 
 type requestDataType = {
@@ -7,20 +8,31 @@ type requestDataType = {
   password: string | number;
 };
 
+type responseDataType = {
+  data: object | string;
+  token: string;
+};
+
 const useAuth = () => {
   const { token } = useLocalStorageData();
   const url = `${POST_USER_LOGIN_API}`;
 
-  const login = async (credentials: requestDataType) => {
-    return await createData({ url, credentials, token });
+  const uselogin = () => {
+    const { data, error, loading, mutate, postData } = useAPIService.Post<
+      responseDataType,
+      requestDataType
+    >({ url, token });
+
+    return {
+      responseLogin: data,
+      login: postData,
+      isErrorLogin: error,
+      isLoadingLogin: loading,
+      refreshLogin: mutate,
+    };
   };
 
-  //formData
-  const logout = async (credentials: requestDataType) => {
-    return await createData({ url, credentials, token });
-  };
-
-  return { login };
+  return { uselogin };
 };
 
 export { useAuth };

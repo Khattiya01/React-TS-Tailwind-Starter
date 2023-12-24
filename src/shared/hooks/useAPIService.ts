@@ -1,8 +1,14 @@
 import { useState } from "react";
 import apiService from "../services/apiService";
-import { AxiosResponse } from "axios";
-import { APIState, DeleteAPIType, PostAndPutAPIType, GetAPIType} from "../types/apiService";
+import { AxiosError, AxiosResponse } from "axios";
+import {
+  APIState,
+  DeleteAPIType,
+  PostAndPutAPIType,
+  GetAPIType,
+} from "../types/apiService";
 import useSWR from "swr";
+import { payloadDeleteUser } from "../../features/user-profile/types/payload";
 
 const Get = <T>({
   url,
@@ -11,12 +17,12 @@ const Get = <T>({
 }: GetAPIType) => {
   const getData = async () => {
     try {
-      const response: AxiosResponse<T> = await apiService({ token: token }).get(
-        url
-      );
-      return  { data: response.data };
+      const response: AxiosResponse<T> = await apiService.get<T>(url, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return { data: response.data };
     } catch (error) {
-      console.error("Error creating data:", error);
+      console.error("Error get data:", error);
       throw error;
     }
   };
@@ -39,7 +45,9 @@ const Post = <T, CredentialsType>({ url, token }: PostAndPutAPIType) => {
     oldCredentials: null,
   });
 
-  const postData = async (credentials: CredentialsType) => {
+  const postData = (
+    credentials: CredentialsType
+  ): Promise<AxiosResponse<T>> => {
     setState((prevState) => ({
       ...prevState,
       oldCredentials: credentials,
@@ -47,26 +55,32 @@ const Post = <T, CredentialsType>({ url, token }: PostAndPutAPIType) => {
       error: null,
     }));
 
-    try {
-      const response: AxiosResponse<T> = await apiService({ token }).post(
-        url,
-        credentials
-      );
-      setState((prevState) => ({
-        ...prevState,
-        data: response.data,
-      }));
-    } catch (error) {
-      setState((prevState) => ({
-        ...prevState,
-        error: error,
-      }));
-    } finally {
-      setState((prevState) => ({
-        ...prevState,
-        loading: false,
-      }));
-    }
+    return new Promise((resolve, reject) => {
+      apiService
+        .post<T>(url, credentials, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response: AxiosResponse<T>) => {
+          setState((prevState) => ({
+            ...prevState,
+            data: response.data,
+          }));
+          resolve(response);
+        })
+        .catch((error: AxiosError) => {
+          setState((prevState) => ({
+            ...prevState,
+            error: error,
+          }));
+          reject(error);
+        })
+        .finally(() => {
+          setState((prevState) => ({
+            ...prevState,
+            loading: false,
+          }));
+        });
+    });
   };
 
   const mutate = async () => {
@@ -84,7 +98,7 @@ const Put = <T, CredentialsType>({ url, token }: PostAndPutAPIType) => {
     oldCredentials: null,
   });
 
-  const putData = async (credentials: CredentialsType) => {
+  const putData = (credentials: CredentialsType): Promise<AxiosResponse<T>> => {
     setState((prevState) => ({
       ...prevState,
       oldCredentials: credentials,
@@ -92,26 +106,32 @@ const Put = <T, CredentialsType>({ url, token }: PostAndPutAPIType) => {
       error: null,
     }));
 
-    try {
-      const response: AxiosResponse<T> = await apiService({ token }).put(
-        url,
-        credentials
-      );
-      setState((prevState) => ({
-        ...prevState,
-        data: response.data,
-      }));
-    } catch (error) {
-      setState((prevState) => ({
-        ...prevState,
-        error: error,
-      }));
-    } finally {
-      setState((prevState) => ({
-        ...prevState,
-        loading: false,
-      }));
-    }
+    return new Promise((resolve, reject) => {
+      apiService
+        .put<T>(url, credentials, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response: AxiosResponse<T>) => {
+          setState((prevState) => ({
+            ...prevState,
+            data: response.data,
+          }));
+          resolve(response);
+        })
+        .catch((error: AxiosError) => {
+          setState((prevState) => ({
+            ...prevState,
+            error: error,
+          }));
+          reject(error);
+        })
+        .finally(() => {
+          setState((prevState) => ({
+            ...prevState,
+            loading: false,
+          }));
+        });
+    });
   };
 
   const mutate = async () => {
@@ -129,32 +149,42 @@ const Delete = <T>({ url, token }: DeleteAPIType) => {
     oldCredentials: null,
   });
 
-  const deleteData = async (credentials: unknown) => {
+  const deleteData = (
+    credentials: payloadDeleteUser
+  ): Promise<AxiosResponse<T>> => {
     setState((prevState) => ({
       ...prevState,
       oldCredentials: credentials,
       loading: true,
       error: null,
     }));
-    try {
-      const response: AxiosResponse<T> = await apiService({ token }).delete(
-        (url = credentials ? `${url}/${credentials}` : url)
-      );
-      setState((prevState) => ({
-        ...prevState,
-        data: response.data,
-      }));
-    } catch (error) {
-      setState((prevState) => ({
-        ...prevState,
-        error: error,
-      }));
-    } finally {
-      setState((prevState) => ({
-        ...prevState,
-        loading: false,
-      }));
-    }
+
+    return new Promise((resolve, reject) => {
+      apiService
+        .delete<T>((url = credentials?.id ? `${url}/${credentials?.id}` : url), {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response: AxiosResponse<T>) => {
+          setState((prevState) => ({
+            ...prevState,
+            data: response.data,
+          }));
+          resolve(response);
+        })
+        .catch((error: AxiosError) => {
+          setState((prevState) => ({
+            ...prevState,
+            error: error,
+          }));
+          reject(error);
+        })
+        .finally(() => {
+          setState((prevState) => ({
+            ...prevState,
+            loading: false,
+          }));
+        });
+    });
   };
 
   const mutate = async () => {

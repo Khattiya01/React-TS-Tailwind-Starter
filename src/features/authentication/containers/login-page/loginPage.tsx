@@ -9,17 +9,15 @@ const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { login } = useAuth();
+  const { uselogin } = useAuth();
+  const { login} = uselogin();
 
   const handleSubmitForm = async () => {
-    await login({ email: email, password: password })
-      .then((res) => {
-        setToken(res.token);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Error during login:", error);
-      });
+    await login({ email: email, password: password }).then((response) => {
+      setToken(response.data?.token);
+      console.log(response);
+      navigate("/");
+    });
   };
 
   return (

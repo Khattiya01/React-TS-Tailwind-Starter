@@ -1,50 +1,21 @@
-import axios, { AxiosInstance } from "axios";
+import axios from "axios";
 import { requestDataType } from "../types/requestDataType";
-import { APIProps } from "../types/apiService";
 
-const apiService = <T>({ token }: APIProps<T>) => {
-  const axiosCreate: AxiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_MAIN_PATH,
-    timeout: 5000,
-    headers: {
-      Authorization: `Bearer ${token ?? ""}`,
-      "Content-Type": "application/json",
-    },
-  });
-  return axiosCreate;
-};
+const apiService = axios.create({
+  baseURL: import.meta.env.VITE_MAIN_PATH,
+  timeout: 5000,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 export default apiService;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const createData = async ({ url, credentials, token }: requestDataType) => {
   try {
-    const response = await apiService({ token: token }).post(url, credentials);
+    const response = await apiService.post(url, credentials, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   } catch (error) {
     console.error("Error creating data:", error);
@@ -54,7 +25,9 @@ const createData = async ({ url, credentials, token }: requestDataType) => {
 
 const updateData = async ({ url, credentials, token }: requestDataType) => {
   try {
-    const response = await apiService({ token: token }).put(url, credentials);
+    const response = await apiService.put(url, credentials, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   } catch (error) {
     console.error("Error updating data:", error);
@@ -64,7 +37,9 @@ const updateData = async ({ url, credentials, token }: requestDataType) => {
 
 const deleteData = async ({ url, token }: requestDataType) => {
   try {
-    const response = await apiService({ token: token }).delete(url);
+    const response = await apiService.delete(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   } catch (error) {
     console.error("Error deleting data:", error);
@@ -77,4 +52,3 @@ export const httpServices = {
   updateData,
   deleteData,
 };
-
