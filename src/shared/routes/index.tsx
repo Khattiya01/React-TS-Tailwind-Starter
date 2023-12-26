@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Root from "./root";
 import UserProfilePage from "../../features/user-profile/containers/user-profile-page/UserProfilePage";
-import MyipPage from "../../features/myip/containers/myip-page/MyipPage";
 import ExamplePage from "../../features/example/containers/examples/examplePage";
 import AboutPage from "../../features/about/containers/about-page/aboutPage";
 import LoginPage from "../../features/authentication/containers/login-page/loginPage";
@@ -18,10 +17,6 @@ const router = createBrowserRouter([
         element: <UserProfilePage />,
       },
       {
-        path: "myip",
-        element: <MyipPage />,
-      },
-      {
         path: "example",
         element: <ExamplePage />,
       },
@@ -34,7 +29,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/about",
-    element: <AboutPage/>
-  }
+    element: <AboutPage />,
+  },
 ]);
 export default router;

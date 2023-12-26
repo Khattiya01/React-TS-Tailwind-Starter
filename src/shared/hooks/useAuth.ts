@@ -1,7 +1,5 @@
-import { POST_USER_LOGIN_API } from "../constants";
-import { useAPIService } from "./useAPIService";
-
-import { useLocalStorageData } from "./useLocalStorageData";
+import { POST_USER_LOGIN_API } from "../constants/apiEndpoints";
+import { ApiService } from "../services/apiService";
 
 type requestDataType = {
   email: string;
@@ -14,14 +12,13 @@ type responseDataType = {
 };
 
 const useAuth = () => {
-  const { token } = useLocalStorageData();
   const url = `${POST_USER_LOGIN_API}`;
 
   const uselogin = () => {
-    const { data, error, loading, mutate, postData } = useAPIService.Post<
+    const { data, error, loading, mutate, postData } = ApiService<
       responseDataType,
       requestDataType
-    >({ url, token });
+    >().Post({ url });
 
     return {
       responseLogin: data,

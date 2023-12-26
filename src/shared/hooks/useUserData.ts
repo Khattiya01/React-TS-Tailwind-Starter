@@ -1,7 +1,5 @@
-import { GET_USER_API } from "../constants";
-import { useSWRService } from "../services/swrService";
-import { useLocalStorageData } from "./useLocalStorageData";
-
+import { GET_USER_API } from "../constants/apiEndpoints";
+import { ApiService } from "../services/apiService";
 interface UserData {
   data: {
     id: number;
@@ -15,11 +13,9 @@ type payloadUser = {
   userId?: number | string;
 };
 const useUserData = ({ userId }: payloadUser) => {
-  const { token } = useLocalStorageData();
   const url = `${GET_USER_API}${userId ? `/${userId}` : ""}`;
-  const { data, error, isLoading, mutate } = useSWRService<UserData, string>(
-    url,
-    token
+  const { data, error, isLoading, mutate } = ApiService<UserData, string>().Get(
+    { url }
   );
   return {
     userData: data,

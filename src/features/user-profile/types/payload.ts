@@ -1,4 +1,4 @@
-export type payloadCreateUser = {
+export type payloadCreateUserType = {
   firstname: string;
   lastname: string;
   accountName?: string;
@@ -6,7 +6,7 @@ export type payloadCreateUser = {
   password: string;
 };
 
-export type payloadUpdateUser = {
+export type payloadUpdateUserType = {
   id: number;
   firstname: string;
   lastname: string;
@@ -15,6 +15,6 @@ export type payloadUpdateUser = {
   password: string;
 };
 
-export type payloadDeleteUser = {
+export type payloadDeleteUserType = {
   id: string | number;
 };

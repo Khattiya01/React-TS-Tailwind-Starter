@@ -1,20 +1,17 @@
 import { useState } from "react";
-import { useUserProfilePage } from "./useUserProfilePage";
 import {
-  payloadCreateUser,
-  payloadDeleteUser,
-  payloadUpdateUser,
+  useGetUserProfile,
+  useCreateUserProfile,
+  useUpdateUserProfile,
+  useDeleteUserProfile,
+} from "./useUserProfilePage";
+import {
+  payloadCreateUserType,
+  payloadDeleteUserType,
+  payloadUpdateUserType,
 } from "../../types/payload";
 
 const UserProfilePage = () => {
-  // hooks
-  const {
-    UserProfile,
-    CreateUserProfile,
-    UpdateUserProfile,
-    DeleteUserProfile,
-  } = useUserProfilePage();
-
   // state
   const [email, setEmail] = useState<string>("");
   const [emailUpdate, setEmailUpdate] = useState<string>("");
@@ -24,33 +21,32 @@ const UserProfilePage = () => {
   const [page, setPage] = useState<string>("1");
   const [limit, setLimit] = useState<string>("10");
 
-  // data
-  const { userData, isLoading, refreshUserData } = UserProfile({
+  // hooks
+  const { responseGetUserProfile, isLoading, refreshUserData } = useGetUserProfile({
     page: page,
     limit: limit,
   });
-  const { postUserProfile, isLoadingPost } = CreateUserProfile();
-  const { putUserProfile } = UpdateUserProfile();
-  const { deleteUserProfile, isLoadingDelete } = DeleteUserProfile();
+  const { postUserProfile, isLoadingPost } = useCreateUserProfile();
+  const { putUserProfile } = useUpdateUserProfile();
+  const { deleteUserProfile, isLoadingDelete } = useDeleteUserProfile();
 
   // handle
   const handleCreateForm = async () => {
-    const payload: payloadCreateUser = {
+    const payload: payloadCreateUserType = {
       email: email,
       password: password,
       firstname: firstname,
       lastname: lastname,
       accountName: "",
     };
-    await postUserProfile(payload)
-      .then((res) => {
-        console.log(res.data.msg);
-        refreshUserData();
-      })
+    await postUserProfile(payload).then((res) => {
+      console.log(res.data.msg);
+      refreshUserData();
+    });
   };
 
-  const handleUpdateForm = async (item: payloadUpdateUser) => {
-    const payload: payloadUpdateUser = {
+  const handleUpdateForm = async (item: payloadUpdateUserType) => {
+    const payload: payloadUpdateUserType = {
       id: item.id,
       email: emailUpdate,
       password: item.password,
@@ -63,7 +59,7 @@ const UserProfilePage = () => {
   };
 
   const handleDeleteForm = async (id: string | number) => {
-    const payload: payloadDeleteUser = {
+    const payload: payloadDeleteUserType = {
       id,
     };
     await deleteUserProfile(payload);
@@ -121,12 +117,14 @@ const UserProfilePage = () => {
           onChange={(e) => setLimit(e.target.value)}
         />
       </div>
+      <div>isLoadingDelete ... {isLoadingDelete}</div>
+      <div>isLoadingPost ... {isLoadingPost}</div>
       {isLoading || isLoadingPost || isLoadingDelete ? (
         <div>loading...</div>
       ) : (
-        userData?.data &&
-        userData?.data?.length > 0 &&
-        userData?.data?.map((item, index) => (
+        responseGetUserProfile?.data &&
+        responseGetUserProfile?.data?.length > 0 &&
+        responseGetUserProfile?.data?.map((item, index) => (
           <div key={item?.id} className="flex gap-2 w-[400px] justify-between">
             {index + 1}
             <div>

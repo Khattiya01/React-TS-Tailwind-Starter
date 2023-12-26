@@ -1,7 +1,5 @@
-import { GET_USER_CHECK_API } from "../constants";
-import { useSWRService } from "../services/swrService";
-import { useLocalStorageData } from "./useLocalStorageData";
-
+import { GET_USER_CHECK_API } from "../constants/apiEndpoints";
+import { ApiService } from "../services/apiService";
 interface UserData {
   data: {
     id: number;
@@ -12,13 +10,12 @@ interface UserData {
 }
 
 const useCheckUser = () => {
-  const { token } = useLocalStorageData();
   const url = `${GET_USER_CHECK_API}`;
 
-  const { data, error, isLoading, mutate } = useSWRService<UserData, string>(
-    url,
-    token
-  );
+  const { data, error, isLoading, mutate } = ApiService<
+    UserData,
+    unknown
+  >().Get({ url });
   return {
     userData: data,
     error,

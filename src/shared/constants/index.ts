@@ -1,19 +1,3 @@
-import {
-  GET_USER_API,
-  POST_USER_API,
-  POST_USER_LOGIN_API,
-  GET_USER_CHECK_API,
-  GET_IPAPI_API,
-  PUT_USER_API,
-  DELETE_USER_API,
-} from "./apiEndpoints";
+const TOKEN = localStorage.getItem("token");
 
-export {
-  GET_USER_API,
-  POST_USER_API,
-  POST_USER_LOGIN_API,
-  GET_USER_CHECK_API,
-  GET_IPAPI_API,
-  PUT_USER_API,
-  DELETE_USER_API,
-};
+export { TOKEN };

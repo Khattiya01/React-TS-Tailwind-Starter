@@ -1,24 +1,22 @@
+import { SWRConfiguration } from "swr";
+
 type APIProps<T> = {
   url?: string;
   credentials?: T;
-  token?: string;
   options?: { revalidateOnFocus: boolean; refreshInterval: number };
 };
 
 type GetAPIType = {
   url: string;
-  token?: string;
-  options?: { revalidateOnFocus: boolean; refreshInterval: number };
+  options?: SWRConfiguration;
 };
 
 type PostAndPutAPIType = {
   url: string;
-  token?: string;
 };
 
 type DeleteAPIType = {
   url: string;
-  token: string;
 };
 
 type APIState<T> = {

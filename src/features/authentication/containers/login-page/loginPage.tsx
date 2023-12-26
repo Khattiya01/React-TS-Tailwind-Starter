@@ -1,20 +1,17 @@
 import { useState } from "react";
 import { useAuth } from "../../../../shared/hooks/useAuth";
-import { useLocalStorageData } from "../../../../shared/hooks/useLocalStorageData";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { setToken } = useLocalStorageData();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
   const { uselogin } = useAuth();
-  const { login} = uselogin();
+  const { login } = uselogin();
 
   const handleSubmitForm = async () => {
     await login({ email: email, password: password }).then((response) => {
-      setToken(response.data?.token);
+      localStorage.setItem("login", response.data.token);
       console.log(response);
       navigate("/");
     });
