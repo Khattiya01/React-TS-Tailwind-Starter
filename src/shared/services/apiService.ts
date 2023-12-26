@@ -20,180 +20,6 @@ const httpClient = axios.create({
   },
 });
 
-// const ApiService = <T, CredentialsType>() => {
-//   const [state, setState] = useState<APIState<T>>({
-//     data: null,
-//     loading: false,
-//     error: null,
-//     oldCredentials: null,
-//   });
-
-//   function updateData({ ...newState }) {
-//     setState((prevState) => ({
-//       ...prevState,
-//       ...newState,
-//     }));
-//   }
-
-//   const Get = ({
-//     url,
-//     options = { revalidateOnFocus: false, refreshInterval: 10000 },
-//   }: GetAPIType) => {
-//     const getData = async () => {
-//       try {
-//         const response: AxiosResponse<T> = await httpClient.get<T>(url);
-//         return response;
-//       } catch (error) {
-//         console.error("Error get data:", error);
-//         throw error;
-//       }
-//     };
-//     const { data, error, mutate, isValidating } = useSWR(
-//       { url },
-//       getData,
-//       options
-//     );
-//     return {
-//       data: data?.data,
-//       error: error,
-//       isLoading: !data && !error,
-//       mutate,
-//       isValidating,
-//     };
-//   };
-
-//   const Post = ({ url }: PostAndPutAPIType) => {
-//     const postData = (
-//       credentials: CredentialsType
-//     ): Promise<AxiosResponse<T>> => {
-//       updateData({
-//         oldCredentials: credentials,
-//         loading: true,
-//         error: null,
-//       });
-
-//       return new Promise((resolve, reject) => {
-//         httpClient
-//           .post<T>(url, credentials)
-//           .then((response: AxiosResponse<T>) => {
-//             updateData({
-//               data: response.data,
-//             });
-//             resolve(response);
-//           })
-//           .catch((error: AxiosError) => {
-//             console.error("Error post data:", error);
-//             updateData({
-//               error: error,
-//             });
-//             reject(error);
-//           })
-//           .finally(() => {
-//             updateData({
-//               loading: false,
-//             });
-//           });
-//       });
-//     };
-
-//     const mutate = async () => {
-//       await postData(state.oldCredentials);
-//     };
-
-//     return { ...state, postData, mutate };
-//   };
-
-//   const Put = ({ url }: PostAndPutAPIType) => {
-//     const putData = (
-//       credentials: CredentialsType
-//     ): Promise<AxiosResponse<T>> => {
-//       updateData({
-//         oldCredentials: credentials,
-//         loading: true,
-//         error: null,
-//       });
-//       return new Promise((resolve, reject) => {
-//         httpClient
-//           .put<T>(url, credentials)
-//           .then((response: AxiosResponse<T>) => {
-//             updateData({
-//               data: response.data,
-//             });
-//             resolve(response);
-//           })
-//           .catch((error: AxiosError) => {
-//             console.error("Error post data:", error);
-//             updateData({
-//               error: error,
-//             });
-//             reject(error);
-//           })
-//           .finally(() => {
-//             updateData({
-//               loading: false,
-//             });
-//           });
-//       });
-//     };
-
-//     const mutate = async () => {
-//       await putData(state.oldCredentials);
-//     };
-
-//     return { ...state, putData, mutate };
-//   };
-
-//   const Delete = ({ url }: DeleteAPIType) => {
-//     const deleteData = (credentials: {
-//       id: string | number;
-//     }): Promise<AxiosResponse<T>> => {
-//       updateData({
-//         oldCredentials: credentials,
-//         loading: true,
-//         error: null,
-//       });
-//       return new Promise((resolve, reject) => {
-//         httpClient
-//           .delete<T>(
-//             (url = credentials?.id ? `${url}/${credentials?.id}` : url)
-//           )
-//           .then((response: AxiosResponse<T>) => {
-//             updateData({
-//               data: response.data,
-//             });
-//             resolve(response);
-//           })
-//           .catch((error: AxiosError) => {
-//             console.error("Error post data:", error);
-//             updateData({
-//               error: error,
-//             });
-//             reject(error);
-//           })
-//           .finally(() => {
-//             updateData({
-//               loading: false,
-//             });
-//           });
-//       });
-//     };
-
-//     const mutate = async () => {
-//       await deleteData(state.oldCredentials);
-//     };
-
-//     return { ...state, deleteData, mutate };
-//   };
-
-//   return {
-//     Get,
-//     Post,
-//     Put,
-//     Delete,
-//   };
-// };
-// export { httpClient, ApiService };
-
 const ApiService = <T, CredentialsType>() => {
   const [state, setState] = useState<APIState<T>>({
     data: null,
@@ -318,6 +144,34 @@ const ApiService = <T, CredentialsType>() => {
   };
 };
 export { httpClient, ApiService };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const createData = async ({ url, credentials }: requestDataType) => {
   try {
