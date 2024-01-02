@@ -13,6 +13,8 @@ import {
 import { useUserProfile } from "../../hooks/useContexts/useUserProfile";
 import { useModal } from "../../../../shared/hooks/useModal";
 import { OptionModal } from "../../../../shared/components/modals/modal";
+import withAuthentication from "../../../../shared/hoc/withAuthentication";
+import { UserRole } from "../../../../shared/types/userRole";
 
 const UserProfilePage = () => {
   // state
@@ -25,7 +27,7 @@ const UserProfilePage = () => {
   const [limit, setLimit] = useState<string>("10");
 
   const isModalOpenRef = useRef(false);
-  
+
   // hooks
   const { responseGetUserProfile, isLoading, refreshUserData } =
     useGetUserProfile({
@@ -80,7 +82,11 @@ const UserProfilePage = () => {
   };
 
   const handleOpenModalAlertGlobal = () => {
-    handleOpenModal("title alert global", " description alert global", OptionModal.ALERT);
+    handleOpenModal(
+      "title alert global",
+      " description alert global",
+      OptionModal.ALERT
+    );
   };
 
   // lifecycle
@@ -90,7 +96,7 @@ const UserProfilePage = () => {
     }
     isModalOpenRef.current = isOpenModal;
   }, [isOpenModal]);
-        
+
   return (
     <section className=" w-screen h-screen min-h-screen p-2 flex items-center flex-col gap-4">
       <div className="flex flex-col gap-2">
@@ -140,8 +146,6 @@ const UserProfilePage = () => {
           onChange={(e) => setLimit(e.target.value)}
         />
       </div>
-      <div>isLoadingDelete ... {isLoadingDelete}</div>
-      <div>isLoadingPost ... {isLoadingPost}</div>
       {isLoading || isLoadingPost || isLoadingDelete ? (
         <div>loading...</div>
       ) : (
@@ -191,4 +195,4 @@ const UserProfilePage = () => {
   );
 };
 
-export default UserProfilePage;
+export default withAuthentication(UserProfilePage, UserRole.ADMIN);

@@ -5,7 +5,10 @@ import {
   DELETE_USER_API,
 } from "../../../../shared/constants/apiEndpoints";
 import { ApiService } from "../../../../shared/services/apiService";
-import { payloadCreateUserType, payloadUpdateUserType } from "../../types/payload";
+import {
+  payloadCreateUserType,
+  payloadUpdateUserType,
+} from "../../types/payload";
 import {
   responseDeleteType,
   responsePostType,
@@ -20,27 +23,31 @@ const useGetUserProfile = ({
   page: string;
   limit: string;
 }) => {
-  const { data, error, isLoading, mutate, isValidating, } =
-    ApiService<userProfileType, unknown>().Get({
-      url: GET_USER_API + `?page${page}` + `&limit${limit}`,
-      options: { revalidateOnFocus: false, refreshInterval: 10000 },
-    });
+  const { data, error, isLoading, mutate, isValidating } = ApiService<
+    userProfileType,
+    unknown
+  >().Get({
+    url: GET_USER_API + `?page${page}` + `&limit${limit}`,
+    options: { revalidateOnFocus: false, refreshInterval: 10000 },
+  });
 
   return {
     responseGetUserProfile: data,
     error,
     isLoading,
     refreshUserData: mutate,
-    isValidating
+    isValidating,
   };
 };
 
 const useCreateUserProfile = () => {
   const urlCreate = `${POST_USER_API}`;
-  const { data, error, loading, mutate, postData } =
-    ApiService<responsePostType, payloadCreateUserType>().Post({
-      url: urlCreate,
-    });
+  const { data, error, loading, mutate, postData } = ApiService<
+    responsePostType,
+    payloadCreateUserType
+  >().Post({
+    url: urlCreate,
+  });
 
   return {
     responsePostUserProfile: data,
@@ -53,10 +60,12 @@ const useCreateUserProfile = () => {
 
 const useUpdateUserProfile = () => {
   const urlUpdate = `${PUT_USER_API}`;
-  const { data, error, loading, mutate, putData } =
-    ApiService<responsePutType, payloadUpdateUserType>().Put({
-      url: urlUpdate,
-    });
+  const { data, error, loading, mutate, putData } = ApiService<
+    responsePutType,
+    payloadUpdateUserType
+  >().Put({
+    url: urlUpdate,
+  });
 
   return {
     responsePutUserProfile: data,
@@ -69,10 +78,12 @@ const useUpdateUserProfile = () => {
 
 const useDeleteUserProfile = () => {
   const urlDelete = `${DELETE_USER_API}`;
-  const { data, error, loading, mutate, deleteData, } =
-    ApiService<responseDeleteType, unknown>().Delete({
-      url: urlDelete,
-    });
+  const { data, error, loading, mutate, deleteData } = ApiService<
+    responseDeleteType,
+    unknown
+  >().Delete({
+    url: urlDelete,
+  });
 
   return {
     responseDeleteUserProfile: data,

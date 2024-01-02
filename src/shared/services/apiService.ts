@@ -169,10 +169,6 @@ export { httpClient, ApiService };
 
 
 
-
-
-
-
 const createData = async ({ url, credentials }: requestDataType) => {
   try {
     const response = await httpClient.post(url, credentials);

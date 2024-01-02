@@ -11,8 +11,7 @@ const LoginPage = () => {
 
   const handleSubmitForm = async () => {
     await login({ email: email, password: password }).then((response) => {
-      localStorage.setItem("login", response.data.token);
-      console.log(response);
+      localStorage.setItem("token", response.data.token);
       navigate("/");
     });
   };
