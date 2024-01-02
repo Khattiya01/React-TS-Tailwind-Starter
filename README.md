@@ -1,6 +1,6 @@
 
 # Start
-npm run dev
+yarn start
 
 # folders structure
 src/

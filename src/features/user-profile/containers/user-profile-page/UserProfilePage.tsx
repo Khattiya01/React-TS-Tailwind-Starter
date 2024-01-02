@@ -84,14 +84,13 @@ const UserProfilePage = () => {
   };
 
   // lifecycle
-
   useEffect(() => {
     if (isModalOpenRef.current && !isOpenModal) {
       console.log("Modal ถูกปิดแล้ว");
     }
     isModalOpenRef.current = isOpenModal;
   }, [isOpenModal]);
-
+        
   return (
     <section className=" w-screen h-screen min-h-screen p-2 flex items-center flex-col gap-4">
       <div className="flex flex-col gap-2">
@@ -178,7 +177,6 @@ const UserProfilePage = () => {
         ))
       )}
 
-            ````````````````````````  ````````````` ```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
       <button
         type="button"
         onClick={() => handleOpenModalAlertGlobal()}

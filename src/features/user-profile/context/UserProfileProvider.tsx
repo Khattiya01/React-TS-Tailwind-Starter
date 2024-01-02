@@ -5,7 +5,7 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import ModalAlert from "../../../shared/components/modals/modal";
+import Modal, { OptionModal } from "../../../shared/components/modals/modal";
 
 type UserProfileContextType = {
   isOpenModal: boolean;
@@ -64,12 +64,13 @@ const UserProfileProvider = ({ children }: UserProfileProviderProps) => {
       }}
     >
       {children}
-      <ModalAlert
+      <Modal
         isOpen={isOpenModal}
         handleClose={handleCloseModal}
         handleSubmit={handleSubmitModal}
         textTitle={textTitleModal}
         textDescription={textDescriptionModal}
+        optionModal={OptionModal.ALERT}
       />
     </UserProfileContext.Provider>
   );
