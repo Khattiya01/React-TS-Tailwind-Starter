@@ -12,7 +12,7 @@ import {
 } from "../../types/payload";
 import { useUserProfile } from "../../hooks/useContexts/useUserProfile";
 import { useModal } from "../../../../shared/hooks/useModal";
-import { OptionModal } from "../../../../shared/components/modals/modalAlert";
+import { OptionModal } from "../../../../shared/components/modals/modal";
 
 const UserProfilePage = () => {
   // state

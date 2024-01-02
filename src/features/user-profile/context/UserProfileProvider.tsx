@@ -5,7 +5,7 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import ModalAlert from "../../../shared/components/modals/modalAlert";
+import ModalAlert from "../../../shared/components/modals/modal";
 
 type UserProfileContextType = {
   isOpenModal: boolean;

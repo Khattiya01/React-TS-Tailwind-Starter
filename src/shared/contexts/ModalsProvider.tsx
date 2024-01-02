@@ -5,7 +5,7 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import ModalAlert, { OptionModal } from "../components/modals/modalAlert";
+import Modal, { OptionModal } from "../components/modals/modal";
 
 type ModalsContextType = {
   isOpenModal: boolean;
@@ -56,7 +56,7 @@ const ModalsProvider = ({ children }: ModalsProviderProps) => {
       }}
     >
       {children}
-      <ModalAlert
+      <Modal
         isOpen={isOpenModal}
         handleClose={handleCloseModal}
         handleSubmit={handleSubmitModal}
