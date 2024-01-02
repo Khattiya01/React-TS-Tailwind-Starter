@@ -5,13 +5,13 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import ModalAlert from "../components/modals/modalAlert";
+import ModalAlert, { OptionModal } from "../components/modals/modalAlert";
 
 type ModalsContextType = {
   isOpenModal: boolean;
   setIsOpenModal: Dispatch<SetStateAction<boolean>>;
-  handleOpenModal: (textTitle: string, textDescription: string) => void;
-  handleCloseModal: () => void,
+  handleOpenModal: (textTitle: string, textDescription: string, type: OptionModal) => void;
+  handleCloseModal: () => void;
 };
 
 export const ModalsContext = createContext<ModalsContextType>({
@@ -29,8 +29,10 @@ const ModalsProvider = ({ children }: ModalsProviderProps) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [textTitleModal, setTextTitleModal] = useState<string>("");
   const [textDescriptionModal, setTextDescriptionModal] = useState<string>("");
+  const [optionModal, setOptionModal] = useState<OptionModal>(OptionModal.ALERT);
 
-  const handleOpenModal = (textTitle: string, textDescription: string) => {
+  const handleOpenModal = (textTitle: string, textDescription: string, type: OptionModal) => {
+    setOptionModal(type)
     setTextTitleModal(textTitle);
     setTextDescriptionModal(textDescription);
     setIsOpenModal(true);
@@ -50,7 +52,7 @@ const ModalsProvider = ({ children }: ModalsProviderProps) => {
         isOpenModal,
         setIsOpenModal,
         handleOpenModal,
-        handleCloseModal
+        handleCloseModal,
       }}
     >
       {children}
@@ -60,6 +62,7 @@ const ModalsProvider = ({ children }: ModalsProviderProps) => {
         handleSubmit={handleSubmitModal}
         textTitle={textTitleModal}
         textDescription={textDescriptionModal}
+        optionModal={optionModal}
       />
     </ModalsContext.Provider>
   );

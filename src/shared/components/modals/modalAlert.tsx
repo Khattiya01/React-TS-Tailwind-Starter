@@ -1,18 +1,26 @@
-type ModalAlertType = {
+type ModalType = {
   isOpen: boolean;
   textTitle: string;
   textDescription: string;
   handleClose: () => void;
   handleSubmit: () => void;
+  optionModal: OptionModal;
 };
 
-const ModalAlert = ({
+export enum OptionModal {
+  ALERT = "ALERT",
+  NOTICE = "NOTICE",
+  OTHER = "OTHER",
+}
+
+const Modal = ({
   isOpen,
   handleClose,
   handleSubmit,
   textTitle,
   textDescription,
-}: ModalAlertType) => {
+  optionModal,
+}: ModalType) => {
   return (
     <>
       {isOpen && (
@@ -23,7 +31,13 @@ const ModalAlert = ({
         >
           <div className="relative p-4 w-full max-w-2xl max-h-full">
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+              {optionModal === OptionModal.ALERT && <div>modal type ALERT</div>}
+              {optionModal === OptionModal.NOTICE && (
+                <div>modal type NOTICE</div>
+              )}
+              {optionModal === OptionModal.OTHER && <div>modal type OTHER</div>}
+              {/* <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                   {textTitle ?? "title"}
                 </h3>
@@ -54,7 +68,7 @@ const ModalAlert = ({
                 <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                   {textDescription ?? "textDescription"}
                 </p>
-              </div>
+              </div> */}
               <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
                   onClick={() => handleSubmit()}
@@ -80,4 +94,4 @@ const ModalAlert = ({
     </>
   );
 };
-export default ModalAlert;
+export default Modal;

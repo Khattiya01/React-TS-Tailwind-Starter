@@ -12,6 +12,7 @@ import {
 } from "../../types/payload";
 import { useUserProfile } from "../../hooks/useContexts/useUserProfile";
 import { useModal } from "../../../../shared/hooks/useModal";
+import { OptionModal } from "../../../../shared/components/modals/modalAlert";
 
 const UserProfilePage = () => {
   // state
@@ -75,11 +76,11 @@ const UserProfilePage = () => {
   };
 
   const handleOpenModalAlert = () => {
-    handleOpenModal("title alert", " description alert ");
+    handleOpenModal("title alert", " description alert ", OptionModal.ALERT);
   };
 
   const handleOpenModalAlertGlobal = () => {
-    handleOpenModal("title alert global", " description alert global");
+    handleOpenModal("title alert global", " description alert global", OptionModal.ALERT);
   };
 
   // lifecycle
@@ -177,7 +178,7 @@ const UserProfilePage = () => {
         ))
       )}
 
-
+            ````````````````````````  ````````````` ```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
       <button
         type="button"
         onClick={() => handleOpenModalAlertGlobal()}
