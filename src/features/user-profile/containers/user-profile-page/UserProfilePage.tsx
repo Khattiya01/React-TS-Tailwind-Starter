@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useGetUserProfile,
   useCreateUserProfile,
@@ -10,6 +10,8 @@ import {
   payloadDeleteUserType,
   payloadUpdateUserType,
 } from "../../types/payload";
+import { useUserProfile } from "../../hooks/useContexts/useUserProfile";
+import { useModal } from "../../../../shared/hooks/useModal";
 
 const UserProfilePage = () => {
   // state
@@ -21,14 +23,20 @@ const UserProfilePage = () => {
   const [page, setPage] = useState<string>("1");
   const [limit, setLimit] = useState<string>("10");
 
+  const isModalOpenRef = useRef(false);
+  
   // hooks
-  const { responseGetUserProfile, isLoading, refreshUserData } = useGetUserProfile({
-    page: page,
-    limit: limit,
-  });
+  const { responseGetUserProfile, isLoading, refreshUserData } =
+    useGetUserProfile({
+      page: page,
+      limit: limit,
+    });
   const { postUserProfile, isLoadingPost } = useCreateUserProfile();
+  0;
   const { putUserProfile } = useUpdateUserProfile();
   const { deleteUserProfile, isLoadingDelete } = useDeleteUserProfile();
+  // const { handleOpenModal } = useUserProfile();
+  const { handleOpenModal, isOpenModal } = useModal();
 
   // handle
   const handleCreateForm = async () => {
@@ -66,7 +74,22 @@ const UserProfilePage = () => {
     await refreshUserData();
   };
 
+  const handleOpenModalAlert = () => {
+    handleOpenModal("title alert", " description alert ");
+  };
+
+  const handleOpenModalAlertGlobal = () => {
+    handleOpenModal("title alert global", " description alert global");
+  };
+
   // lifecycle
+
+  useEffect(() => {
+    if (isModalOpenRef.current && !isOpenModal) {
+      console.log("Modal ถูกปิดแล้ว");
+    }
+    isModalOpenRef.current = isOpenModal;
+  }, [isOpenModal]);
 
   return (
     <section className=" w-screen h-screen min-h-screen p-2 flex items-center flex-col gap-4">
@@ -153,6 +176,18 @@ const UserProfilePage = () => {
           </div>
         ))
       )}
+
+
+      <button
+        type="button"
+        onClick={() => handleOpenModalAlertGlobal()}
+        className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
+      focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5
+      py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700
+      dark:focus:ring-blue-800"
+      >
+        open modal
+      </button>
     </section>
   );
 };

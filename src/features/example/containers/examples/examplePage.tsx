@@ -1,6 +1,6 @@
 const ExamplePage = () => {
   
-  const handle = (data) => {
+  const handle = (data: string) => {
     console.log("handle data:", data);
   };
 

@@ -3,8 +3,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Root from "./root";
 import UserProfilePage from "../../features/user-profile/containers/user-profile-page/UserProfilePage";
 import ExamplePage from "../../features/example/containers/examples/examplePage";
-import AboutPage from "../../features/about/containers/about-page/aboutPage";
 import LoginPage from "../../features/authentication/containers/login-page/loginPage";
+import UserProfileProvider from "../../features/user-profile/context/UserProfileProvider";
 
 const router = createBrowserRouter([
   //main
@@ -14,7 +14,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "profile",
-        element: <UserProfilePage />,
+        element: (
+          <UserProfileProvider>
+            <UserProfilePage />
+          </UserProfileProvider>
+        ),
       },
       {
         path: "example",
@@ -26,10 +30,6 @@ const router = createBrowserRouter([
   {
     path: "/signin",
     element: <LoginPage />,
-  },
-  {
-    path: "/about",
-    element: <AboutPage />,
   },
 ]);
 export default router;
