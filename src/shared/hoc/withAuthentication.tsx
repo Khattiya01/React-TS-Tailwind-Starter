@@ -9,10 +9,13 @@ const withAuthentication = (
   WrappedComponent: React.ComponentType<any>,
   requiredRole: string
 ) => {
+
   // กำหนดชนิดของ HOC
   const WithAuthentication = (props: AuthProps) => {
+
     const { userData } = useLocalStorageData();
     const [isloading, setIsloading] = useState<boolean>(true);
+
     useEffect(() => {
       // ตรวจสอบว่าผู้ใช้ลงชื่อเข้าใช้หรือยัง
       const isAuthenticated = checkAuthentication();

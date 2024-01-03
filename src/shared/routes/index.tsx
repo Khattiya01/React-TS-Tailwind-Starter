@@ -19,6 +19,7 @@ const router = createBrowserRouter([
             <UserProfilePage />
           </UserProfileProvider>
         ),
+        errorElement: <>Error...</>,
       },
       {
         path: "example",
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+
   //
   {
     path: "/signin",

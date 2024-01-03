@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import {
   useGetUserProfile,
   useCreateUserProfile,
@@ -131,6 +131,7 @@ const UserProfilePage = () => {
           create
         </button>
       </div>
+
       <h3 className=" font-bold text-2xl">User Profile</h3>
       <div>
         <input
@@ -195,4 +196,4 @@ const UserProfilePage = () => {
   );
 };
 
-export default withAuthentication(UserProfilePage, UserRole.ADMIN);
+export default withAuthentication(UserProfilePage, UserRole.USER);
