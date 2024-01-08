@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocalStorageData } from "../hooks/useLocalStorageData";
+import { useLocalStorageData } from "../hooks/useAuth";
 
 type AuthProps = {
   children?: React.ReactNode;

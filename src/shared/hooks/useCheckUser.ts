@@ -1,12 +1,13 @@
 import { GET_USER_CHECK_API } from "../constants/apiEndpoints";
 import { ApiService } from "../services/apiService";
-interface UserData {
+type UserData = {
   data: {
     id: number;
     name: string;
     email: string;
     password: string | number;
-  }[];
+    role: string
+  };
 }
 
 const useCheckUser = () => {

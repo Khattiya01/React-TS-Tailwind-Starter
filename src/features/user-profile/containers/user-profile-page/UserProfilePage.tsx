@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useGetUserProfile,
   useCreateUserProfile,
@@ -10,10 +10,9 @@ import {
   payloadDeleteUserType,
   payloadUpdateUserType,
 } from "../../types/payload";
-import { useUserProfile } from "../../hooks/useContexts/useUserProfile";
 import { useModal } from "../../../../shared/hooks/useModal";
 import { OptionModal } from "../../../../shared/components/modals/modal";
-import withAuthentication from "../../../../shared/hoc/withAuthentication";
+import ProtectedComponent from "../../../../shared/components/security/ProtectComponent";
 import { UserRole } from "../../../../shared/types/userRole";
 
 const UserProfilePage = () => {
@@ -35,7 +34,6 @@ const UserProfilePage = () => {
       limit: limit,
     });
   const { postUserProfile, isLoadingPost } = useCreateUserProfile();
-  0;
   const { putUserProfile } = useUpdateUserProfile();
   const { deleteUserProfile, isLoadingDelete } = useDeleteUserProfile();
   // const { handleOpenModal } = useUserProfile();
@@ -192,8 +190,15 @@ const UserProfilePage = () => {
       >
         open modal
       </button>
+
+      <ProtectedComponent allowedRoles={[UserRole.ADMIN]}>  
+        <div className=" bg-red-500 w-[200px] h-[200px]">components admin</div>
+      </ProtectedComponent>
+      <ProtectedComponent allowedRoles={[UserRole.USER]}>
+        <div className=" bg-green-500 w-[200px] h-[200px]">components user</div>
+      </ProtectedComponent>
     </section>
   );
 };
 
-export default withAuthentication(UserProfilePage, UserRole.USER);
+export default UserProfilePage;

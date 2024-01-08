@@ -2,20 +2,25 @@ import { Outlet, useNavigate } from "react-router-dom";
 import useCheckUser from "../hooks/useCheckUser";
 import { Footer, Navbar, Sidebar } from "../components/common";
 import { useEffect } from "react";
-import { useLocalStorageData } from "../hooks/useLocalStorageData";
-import withAuthorization from "../hoc/withAuthorization";
+import { useAuth } from "../hooks/useAuth";
 
 const Root = () => {
   const navigate = useNavigate();
   const { userData, error, isLoading } = useCheckUser();
-  const { setUserData } = useLocalStorageData();
+  const { setUserData, userRole, setUserRole } = useAuth();
 
   useEffect(() => {
     if (userData) {
-      console.log("userData on login", userData)
+      console.log("userData on login", userData);
+      console.log("user role", userRole);
       setUserData(userData.data);
+      setUserRole(userData.data.role)
     }
   }, [userData]);
+
+  if (!localStorage.getItem("token")) {
+    window.location.replace("/signin");
+  }
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -23,7 +28,6 @@ const Root = () => {
 
   if (error) {
     navigate("/signin");
-    return <p>Error: {error}</p>;
   }
 
   return (
@@ -40,4 +44,4 @@ const Root = () => {
   );
 };
 
-export default withAuthorization(Root);
+export default Root;

@@ -1,17 +1,20 @@
 import { useState } from "react";
-import { useAuth } from "../../../../shared/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import useLogin from "../../../../shared/hooks/useLogin";
+import { useAuth } from "../../../../shared/hooks/useAuth";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { uselogin } = useAuth();
-  const { login } = uselogin();
+  const { setUserRole} = useAuth();
+  const { login } = useLogin();
 
   const handleSubmitForm = async () => {
     await login({ email: email, password: password }).then((response) => {
       localStorage.setItem("token", response.data.token);
+      setUserRole(response.data.data.role)
+      console.log(response.data);
       navigate("/");
     });
   };
