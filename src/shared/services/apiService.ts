@@ -61,6 +61,7 @@ const ApiService = <T, CredentialsType>() => {
       ...newState,
     }));
   }
+
   const handleRequest = async <T>(
     request: Promise<AxiosResponse<T>>,
     credentials:
@@ -106,7 +107,7 @@ const ApiService = <T, CredentialsType>() => {
         throw error;
       }
     };
-    const { data, error, mutate, isValidating } = useSWR(
+    const { data, error, mutate, isValidating, isLoading } = useSWR(
       { url },
       getData,
       options
@@ -114,7 +115,7 @@ const ApiService = <T, CredentialsType>() => {
     return {
       data: data?.data,
       error: error,
-      isLoading: !data && !error,
+      isLoading: isLoading,
       mutate,
       isValidating,
     };
@@ -171,63 +172,3 @@ const ApiService = <T, CredentialsType>() => {
   };
 };
 export { httpClient, ApiService };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const createData = async ({ url, credentials }: requestDataType) => {
-  try {
-    const response = await httpClient.post(url, credentials);
-    return response.data;
-  } catch (error) {
-    console.error("Error creating data:", error);
-    throw error;
-  }
-};
-
-const updateData = async ({ url, credentials }: requestDataType) => {
-  try {
-    const response = await httpClient.put(url, credentials);
-    return response.data;
-  } catch (error) {
-    console.error("Error updating data:", error);
-    throw error;
-  }
-};
-
-const deleteData = async ({ url }: requestDataType) => {
-  try {
-    const response = await httpClient.delete(url);
-    return response.data;
-  } catch (error) {
-    console.error("Error deleting data:", error);
-    throw error;
-  }
-};
-
-export const httpServices = {
-  createData,
-  updateData,
-  deleteData,
-};
